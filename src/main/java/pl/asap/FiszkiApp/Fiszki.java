@@ -3,10 +3,12 @@ package pl.asap.FiszkiApp;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Map;
 
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Table(name = "fiszki")
 @Getter
 @Setter
@@ -20,6 +22,9 @@ public class Fiszki {
     @NonNull
     @ManyToOne
     private User user;
+
+    @NonNull
+    private String name;
 
     @NonNull
     private String body;
