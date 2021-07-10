@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,17 +38,18 @@ public class FiszkiServices {
         return ResponseEntity.ok(savedFiszka);
     }
 
-//    @GetMapping("/fiszki")
-//    public ResponseEntity getFiszki(@RequestBody int fiszka_id) throws JsonProcessingException {
-//
-//        Optional<Fiszki> fiszkaFromDb = fiszkiRepository.findById(fiszka_id);
-//
-//        String body = objectMapper.writeValueAsString(fiszkaFromDb.get().getBody());
-//
-//        if(fiszkaFromDb.isEmpty()){
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
-//
-//        return ResponseEntity.ok(body);
-//    }
+    @GetMapping("/fiszki")
+    public ResponseEntity getFiszki(@RequestHeader("username") String username){
+
+        Optional<User> userFromDb = userRepository.findByUsername(username);
+
+        List<Fiszki> fiszkiFromDb = fiszkiRepository.findByUser(userFromDb);
+
+        HashMap<Integer, String> items = new HashMap<>();
+        for(Fiszki fiszki : fiszkiFromDb){
+
+            items.put(fiszki.getId(), fiszki.getName());
+        }
+        return ResponseEntity.ok(items);
+    }
 }
