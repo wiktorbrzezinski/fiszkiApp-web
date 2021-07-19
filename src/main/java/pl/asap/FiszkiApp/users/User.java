@@ -1,4 +1,4 @@
-package pl.asap.FiszkiApp;
+package pl.asap.FiszkiApp.users;
 
 import lombok.*;
 
