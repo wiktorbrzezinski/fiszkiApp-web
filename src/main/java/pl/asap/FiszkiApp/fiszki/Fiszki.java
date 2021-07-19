@@ -1,9 +1,9 @@
-package pl.asap.FiszkiApp;
+package pl.asap.FiszkiApp.fiszki;
 
 import lombok.*;
+import pl.asap.FiszkiApp.users.User;
 
 import javax.persistence.*;
-import java.util.Map;
 
 @Entity
 @AllArgsConstructor

@@ -1,11 +1,12 @@
-package pl.asap.FiszkiApp;
+package pl.asap.FiszkiApp.fiszki;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.asap.FiszkiApp.users.User;
+import pl.asap.FiszkiApp.users.UserRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,5 +52,18 @@ public class FiszkiServices {
             items.put(fiszki.getId(), fiszki.getName());
         }
         return ResponseEntity.ok(items);
+    }
+
+    @GetMapping("/words")
+    public ResponseEntity getWords(@RequestHeader("id") int id){
+
+        Optional<Fiszki> fiszkaFromDb = fiszkiRepository.findById(id);
+
+        if(fiszkaFromDb.isEmpty()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        String body = fiszkaFromDb.get().getBody();
+
+        return ResponseEntity.ok(body);
     }
 }
